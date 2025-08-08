@@ -1,0 +1,62 @@
+# Check initial firewall status
+ufw status
+# Output:
+# Status: inactive
+
+# Enable the firewall
+ufw enable
+# Output:
+# Firewall is active and enabled on system startup
+
+# View firewall rules in numbered format
+ufw status numbered
+# Output:
+# Status: active
+
+# Deny port 23 (Telnet)
+ufw deny 23
+# Output:
+# Rule added
+# Rule added (v6)
+
+# Check firewall status again
+ufw status
+# Output:
+# Status: active
+# 23                         DENY        Anywhere
+# 23 (v6)                    DENY        Anywhere (v6)
+
+# Test Telnet connection to port 23
+telnet localhost 23
+# Output:
+# Trying ::1...
+# Connection failed: Connection refused
+# Trying 127.0.0.1...
+# telnet: Unable to connect to remote host: Connection refused
+
+# Allow port 22 (SSH)
+ufw allow 22
+# Output:
+# Rule added
+# Rule added (v6)
+
+# View updated firewall rules
+ufw status
+# Output:
+# 23                         DENY        Anywhere
+# 22                         ALLOW       Anywhere
+# 23 (v6)                    DENY        Anywhere (v6)
+# 22 (v6)                    ALLOW       Anywhere (v6)
+
+# Delete deny rule for port 23
+ufw delete deny 23
+# Output:
+# Rule deleted
+# Rule deleted (v6)
+
+# Final firewall status
+ufw status
+# Output:
+# Status: active
+# 22                         ALLOW       Anywhere
+# 22 (v6)                    ALLOW       Anywhere (v6)
